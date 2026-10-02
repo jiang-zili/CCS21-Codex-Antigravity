@@ -1,11 +1,31 @@
-# Google Antigravity 1.6.0 — CCS21 修复版
+# CCS21 扩展加载修复
+
+本仓库保存 CCS 21.0.1 上 Google Antigravity 和 Codex 的排障方法与本地修复工具。属于非官方适配。
+
+| 扩展 | 本次问题 | 修复入口 |
+| --- | --- | --- |
+| Codex `26.930.21537` | Windows 误装 `alpine-arm64` 包导致后端缺失；Theia 的副侧栏兼容问题 | [Codex 下载、修复与回退说明](./codex/README.md) |
+| Google Antigravity `1.6.0` | 聊天和设置页显示 “Couldn't load this view” | 下方的修复版 VSIX |
+
+2026-10-02 在 CCS 21.0.1 复查：Codex 已显示会话列表和输入框；Antigravity 聊天输入框与设置页均可打开。Antigravity 原修复文件仍有效，本次没有改动其 VSIX。
+
+## Codex
+
+Codex 使用官方 `win32-x64` VSIX，并通过独立脚本在本机应用 CCS 侧栏兼容修复。完整 Codex 扩展包由官方链接下载；本仓库只发布修复工具和说明。平台核验会拒绝 Linux ARM 包。若侧栏保留旧布局，还需在 CCS 执行 `View: Reset Workbench Layout`。
+
+- [修复说明](./codex/README.md)
+- [下载及平台修复工具](./codex/repair_codex_ccs21.py)
+- [Theia 侧栏兼容工具](./codex/apply_theia_compatibility.py)
+- [官方扩展页面](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt)
+
+## Google Antigravity 1.6.0 — CCS21 修复版
 [下载修复版 VSIX](./google.google-antigravity-1.6.0-ccs21-patched.vsix?raw=1)
 
 SHA-256：`44781ae719c077daf59e065d0ce60523192cc2023bce259a448e3294ab53e655`
 
 这是基于本机已验证版本重新打包的非官方、无签名 VSIX。扩展 ID 保持 `google.google-antigravity`，版本保持 `1.6.0`，便于替换同版本安装。它不是 Google 发布的官方修复。
 
-## 已修复问题
+### 已修复问题
 
 CCStudio 21 的 Theia 页面打开 Antigravity 聊天侧栏及设置页时出现 “Couldn't load this view”。后端的 `frame-ancestors` 未允许 CCS 的 Theia webview 来源和顶层 `file:` 页面。
 
@@ -13,7 +33,7 @@ CCStudio 21 的 Theia 页面打开 Antigravity 聊天侧栏及设置页时出现
 
 `file:` 允许本机其他 HTML 页面在知道该临时代理地址时嵌入它。这是本次 CCS 适配所需的权限范围；不会修改 Google 后端程序或 CCS 本体。
 
-## 安装
+### 安装
 
 1. 在 CCS21 扩展界面选择 “Install from VSIX…”（从 VSIX 安装），选择本目录的 `.vsix` 文件。
 2. 如果 CCS 拒绝覆盖相同版本，先卸载已有 Google Antigravity，再安装这个文件。
@@ -23,7 +43,7 @@ CCStudio 21 的 Theia 页面打开 Antigravity 聊天侧栏及设置页时出现
 
 扩展更新或重新安装官方版本会覆盖适配；恢复官方版可卸载本包后从扩展市场安装。此 VSIX 不包含本机 Google 登录信息、聊天记录、项目文件或 agy 后端可执行文件；使用时仍需扩展正常下载后端并完成登录。
 
-## 打包内容和许可证
+### 打包内容和许可证
 
 - 保留原扩展文件及 `LICENSE.txt`、`ThirdPartyNotices.txt`。
 - `extension.js` 含已验证的 `renderIframe` 适配；新增 `ccs-embed-proxy.cjs`。
