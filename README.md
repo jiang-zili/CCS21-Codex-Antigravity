@@ -2,6 +2,13 @@
 
 本仓库保存 CCS 21.0.1 上 Google Antigravity 和 Codex 的排障方法与本地修复工具。属于非官方适配。
 
+## 2026-10-08：Codex / Antigravity 白屏一键修复
+
+下载 [一键修复 CMD](./repair_ccs21_codex_antigravity.cmd?raw=1)，双击运行；运行前请阅读 [适用版本、安装前提、备份与回退说明](./ONE_CLICK_REPAIR.md)。脚本会先校验版本与文件结构，备份后按需修复 Theia Webview、Codex Windows 后端和 Antigravity 代理，再重建缓存并重启 CCS21。
+
+此脚本适用于已安装下方 Antigravity 1.6.0 CCS21 适配版 VSIX 的环境。与下方 2026-10-02 的 VSIX 修复不同，本次一键脚本在需要时会修改 CCS21 的 `app.asar`；备份和精确校验见说明。以下保留之前的排障与安装记录。
+
+
 | 扩展 | 本次问题 | 修复入口 |
 | --- | --- | --- |
 | Codex `26.930.21537` | Windows 误装 `alpine-arm64` 包导致后端缺失；Theia 的副侧栏兼容问题 | [Codex 下载、修复与回退说明](./codex/README.md) |
